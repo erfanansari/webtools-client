@@ -71,6 +71,10 @@ img {
     }
 }
 
+::selection {
+    color: #f0f7ff;
+    background: #f75130;
+}
 :root {
     --container: 1120px;
     /* --light-blue: #d7e5ff; */

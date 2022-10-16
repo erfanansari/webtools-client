@@ -12,13 +12,27 @@ interface Props {
 
 const tags = [
     'All',
-    'Developer Tools',
-    'Design Tools',
+    'Developer',
+    'Design',
     'Productivity',
     'Education',
     'News',
     'Auth',
     'Analytics',
+    'Public APIs',
+    'Database1',
+    'Database2',
+    'Database3',
+    'Database4',
+    'Database5',
+    'Database6',
+    'Database7',
+    'Database8',
+    'Database9',
+    'Database10',
+    'Database11',
+    'Database12',
+    'Database13',
 ]
 
 const Home: NextPage<Props> = ({ spaces }) => {
@@ -49,11 +63,13 @@ const Home: NextPage<Props> = ({ spaces }) => {
     const selectedButtonClasses = 'border-b-2 border-b-primary-main'
 
     return (
-        <Layout title="All Spaces">
-            <div className="text-6xl mt-28">
-                <h1 className="font-bold text-secondary-main">All Spaces</h1>
+        <Layout title="Web Tools">
+            <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
+                <h1 className="font-bold text-secondary-main">
+                    {selected} Tools
+                </h1>
             </div>
-            <div className="flex h-12 max-w-full mt-16 overflow-x-scroll tags">
+            <div className="flex h-12 max-w-full overflow-x-scroll tags">
                 {tags.map((tag) => (
                     <button
                         key={tag}
@@ -66,7 +82,7 @@ const Home: NextPage<Props> = ({ spaces }) => {
                     </button>
                 ))}
             </div>
-            <div className="grid justify-center row-span-5 gap-8 md:grid-cols-2 lg:grid-cols-3 mt-14 pb-14">
+            <div className="grid justify-center row-span-5 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 sm:mt-14 pb-14">
                 {spaces.map((space, i) => (
                     <div
                         key={space.slug}
@@ -79,6 +95,8 @@ const Home: NextPage<Props> = ({ spaces }) => {
                                 alt={space.title}
                                 className="transition duration-300 hover:scale-125"
                                 layout="fill"
+                                unoptimized
+                                priority
                             />
                         </div>
                         <div className="p-8">
