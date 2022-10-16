@@ -1,8 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { IoLogoGithub } from 'react-icons/io5'
 
+const linkClasses =
+    'text-neutral-light border-transparent border-t-2 transition-all border-b-2 pb-[6px] hover:border-b-primary-main'
+
 const Header = () => {
+    const router = useRouter()
+
     return (
         <header className="text-white bg-secondary-main">
             <div className="flex items-center justify-between h-20 sm:h-24 custom-container">
@@ -19,7 +25,13 @@ const Header = () => {
                     </Link>
                 </div>
                 <Link href="/bookmarks">
-                    <a className="hidden ml-auto mr-12 text-neutral-light sm:block">
+                    <a
+                        className={`hidden ml-auto mr-12 sm:block mt-[6px] ${linkClasses} ${
+                            router.pathname === '/bookmarks'
+                                ? 'border-b-primary-main'
+                                : ''
+                        }`}
+                    >
                         Bookmarks
                     </a>
                 </Link>
@@ -31,7 +43,15 @@ const Header = () => {
             </div>
             <div className="flex justify-between pb-4 mx-6 sm:hidden">
                 <Link href="/bookmarks">
-                    <a className="text-neutral-light">Bookmarks</a>
+                    <a
+                        className={`${linkClasses} ${
+                            router.pathname === '/bookmarks'
+                                ? 'border-b-primary-main'
+                                : ''
+                        }`}
+                    >
+                        Bookmarks
+                    </a>
                 </Link>
             </div>
         </header>
