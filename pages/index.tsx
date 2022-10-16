@@ -39,7 +39,8 @@ const Home: NextPage<Props> = ({ spaces }) => {
                     display: 'flex',
                 }}
             >
-                <h1>Spaces</h1>
+                <h1 className="bg-cfj">Spaces</h1>
+                <h1 className="text-3xl font-bold underline">fuck</h1>
                 <br />
 
                 {spaces.map((space) => (

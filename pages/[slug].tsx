@@ -12,7 +12,7 @@ const Slug: NextPage<Props> = ({ space }) => {
             <Link href="/">
                 <h1 style={{ color: 'red', cursor: 'pointer' }}>Spaces</h1>
             </Link>
-            <h2>slug: {space.slug}</h2>
+            <h2 className="">slug: {space.slug}</h2>
             <ul>
                 {space.tools.map((tool: Tool) => (
                     <div key={tool.slug}>
