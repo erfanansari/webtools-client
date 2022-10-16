@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { apiClient } from '../apiClient'
+import Layout from '../components/Layout'
 
 interface Props {
     spaces: Space[]
@@ -33,17 +34,11 @@ const Home: NextPage<Props> = ({ spaces }) => {
     // if (isLoading) return <div>Loading...</div>
 
     return (
-        <>
-            <div
-                style={{
-                    display: 'flex',
-                }}
-            >
-                <h1 className="bg-cfj">Spaces</h1>
-                <h1 className="text-3xl font-bold underline">fuck</h1>
-                <br />
-
-                {spaces.map((space) => (
+        <Layout title="All Spaces">
+            <div className="text-6xl mt-28">
+                <h1 className="font-bold text-secondary-main">All Spaces</h1>
+            </div>
+            {/* {spaces.map((space) => (
                     <div
                         style={{
                             width: '300px',
@@ -72,9 +67,8 @@ const Home: NextPage<Props> = ({ spaces }) => {
                             height={300}
                         />
                     </div>
-                ))}
-            </div>
-        </>
+                ))} */}
+        </Layout>
     )
 }
 

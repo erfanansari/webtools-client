@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { apiClient } from '../apiClient'
+import Layout from '../components/Layout'
 
 interface Props {
     space: Space
@@ -8,7 +9,7 @@ interface Props {
 
 const Slug: NextPage<Props> = ({ space }) => {
     return (
-        <div>
+        <Layout title={space.title}>
             <Link href="/">
                 <h1 style={{ color: 'red', cursor: 'pointer' }}>Spaces</h1>
             </Link>
@@ -24,7 +25,7 @@ const Slug: NextPage<Props> = ({ space }) => {
                     </div>
                 ))}
             </ul>
-        </div>
+        </Layout>
     )
 }
 
