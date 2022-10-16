@@ -82,16 +82,16 @@ const Home: NextPage<Props> = ({ spaces }) => {
                     </button>
                 ))}
             </div>
-            <div className="grid justify-center row-span-5 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 sm:mt-14 pb-14">
+            <div className="grid row-span-5 gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-14 pb-14">
                 {spaces.map((space, i) => (
                     <div
                         key={space.slug}
-                        className="w-[352px] h-[380px] md:w-full max-w-[352px] overflow-hidden bg-white rounded-lg shadow-cart"
+                        className="w-full h-[380px] md:w-full overflow-hidden bg-white rounded-lg shadow-cart"
                     >
                         <div className="relative h-[192px]">
                             <Image
                                 loader={({ src }) => src}
-                                src={`https://picsum.photos/200/300?random=${i}`}
+                                src={`https://picsum.photos/400/300?random=${i}`}
                                 alt={space.title}
                                 className="transition duration-300 hover:scale-125"
                                 layout="fill"
