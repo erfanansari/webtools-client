@@ -21,7 +21,7 @@ const Layout: React.FC<Props> = ({
                 <meta name="description" content={description} />
             </Head>
             <Header />
-            <main className="mx-auto w-[var(--container)]">{children}</main>
+            <main className="custom-container">{children}</main>
             {/* <Footer /> */}
         </div>
     )

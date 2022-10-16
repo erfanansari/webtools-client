@@ -11,6 +11,11 @@ body {
         sans-serif;
 }
 
+body {
+    background: linear-gradient(to top, #f7fafe 0%, #fff 120%);
+    min-height: 100vh;
+}
+
 *,
 *:before,
 *:after {
@@ -44,6 +49,26 @@ ul {
 img {
     max-width: 100%;
     height: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.tags::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.tags {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+@layer components {
+    .btn-primary {
+        @apply h-10 px-4 text-white transition-all rounded-3xl bg-primary-main hover:bg-primary-dark hover:text-gray-300;
+    }
+    .custom-container {
+        @apply mx-6 sm:mx-8 xl:mx-auto xl:w-[var(--container)];
+    }
 }
 
 :root {

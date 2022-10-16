@@ -1,6 +1,6 @@
 interface Space {
     title: string
-    slug: number
+    slug: string
     link: string
     createAt: string
     tools: Tool[]
@@ -9,7 +9,7 @@ interface Space {
 interface Tool {
     name: string
     description: string
-    slug: number
+    slug: string
     link: string
     createAt: string
 }
