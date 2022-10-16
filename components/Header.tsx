@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { IoLogoGithub } from 'react-icons/io5'
 
 const Header = () => {
     return (
@@ -17,9 +18,10 @@ const Header = () => {
                         <h1 className="ml-2 text-3xl font-bold">Web Tools</h1>
                     </Link>
                 </div>
-                <div>
-                    <button className="btn-primary">Login via GitHub</button>
-                </div>
+                <button className="flex items-center btn-primary">
+                    Login via GitHub
+                    <IoLogoGithub className="ml-2" size={25} />
+                </button>
             </div>
         </header>
     )
