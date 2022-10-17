@@ -6,7 +6,7 @@ import { IoLogoGithub } from 'react-icons/io5'
 const linkClasses =
     'text-neutral-light border-transparent border-t-2 transition-all border-b-2 pb-[6px] hover:border-b-primary-main'
 
-const Header = () => {
+const Header: React.FC = () => {
     const router = useRouter()
 
     return (
