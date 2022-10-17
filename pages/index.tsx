@@ -75,11 +75,11 @@ const Home: NextPage<Props> = (props) => {
                         key={tool.slug}
                         className="w-full overflow-hidden bg-white rounded-2xl md:w-full shadow-cart"
                         style={{
-                            // @ts-ignore - this is a valid css property
-                            '-webkit-backface-visibility': 'hidden',
-                            '-moz-backface-visibility': 'hidden',
-                            '-webkit-transform': 'translate3d(0, 0, 0)',
-                            '-moz-transform': 'translate3d(0, 0, 0)',
+                            WebkitBackfaceVisibility: 'hidden',
+                            MozBackfaceVisibility: 'hidden',
+                            WebkitTransform: 'translate3d(0, 0, 0)',
+                            // @ts-ignore - this is a valid property
+                            MozTransform: 'translate3d(0, 0, 0)',
                         }}
                     >
                         <div className="relative h-[192px]">
