@@ -9,7 +9,8 @@ interface Space {
 interface Tool {
     name: string
     description: string
+    url: string
     slug: string
-    link: string
-    createAt: string
+    createdAt: string
+    tag: string
 }

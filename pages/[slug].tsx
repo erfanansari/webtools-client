@@ -19,8 +19,8 @@ const Slug: NextPage<Props> = ({ space }) => {
                     <div key={tool.slug}>
                         <li>name: {tool.name}</li>
                         <li>description: {tool.description}</li>
-                        <li>link: {tool.link}</li>
-                        <li>createAt: {tool.createAt}</li>
+                        <li>link: {tool.url}</li>
+                        <li>createAt: {tool.createdAt}</li>
                         <br />
                     </div>
                 ))}
