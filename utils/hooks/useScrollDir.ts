@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 export function useScrollDir() {
     const [scrollDir, setScrollDir] = useState<
         'scrolling down' | 'scrolling up'
-    >('scrolling down')
+    >('scrolling up')
 
     useEffect(() => {
         const threshold = 0
