@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { IoLogoGithub } from 'react-icons/io5'
+import { useScrollDir } from '../utils/hooks/useScrollDir'
 
 const linkClasses =
     'text-neutral-light border-transparent border-t-2 transition-all border-b-2 pb-[6px] hover:border-b-primary-main'
@@ -9,8 +10,18 @@ const linkClasses =
 const Header: React.FC = () => {
     const router = useRouter()
 
+    const { scrollDir } = useScrollDir()
+
     return (
-        <header className="text-white bg-secondary-main">
+        <header
+            className={`
+            ${
+                scrollDir === 'scrolling down'
+                    ? '-translate-y-full'
+                    : 'translate-y-0'
+            }
+            fixed top-0 z-10 w-full text-white transition-transform duration-300 bg-secondary-main`}
+        >
             <div className="flex items-center justify-between h-20 sm:h-24 custom-container">
                 <div className="flex items-center cursor-pointer">
                     <Image

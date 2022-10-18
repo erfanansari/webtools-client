@@ -22,8 +22,6 @@ const Home: NextPage<Props> = (props) => {
     //     )
     // }
 
-    console.log(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/github`)
-
     const [selected, setSelected] = useState('All')
 
     const { data: tools } = useQuery(
@@ -43,7 +41,7 @@ const Home: NextPage<Props> = (props) => {
 
     return (
         <Layout title="Web Tools">
-            <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
+            <div className="text-[2.5rem] sm:text-6xl mt-36 sm:mt-52 mb-6 sm:mb-16">
                 <h1 className="font-bold capitalize text-secondary-main">
                     {selected} Tools
                 </h1>
