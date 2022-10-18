@@ -11,6 +11,10 @@ body {
         sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: linear-gradient(to top, #f7fafe 0%, #fff 120%);
     min-height: 100vh;
@@ -65,6 +69,9 @@ img {
 @layer components {
     .btn-primary {
         @apply h-10 px-4 text-white transition-all rounded-3xl bg-primary-main hover:bg-primary-dark hover:text-gray-300;
+    }
+    .btn-secondary {
+        @apply px-12 py-2 text-xl rounded-full font-medium border border-neutral-dark text-secondary-dark;
     }
     .custom-container {
         @apply mx-6 sm:mx-8 xl:mx-auto xl:w-[var(--container)];
