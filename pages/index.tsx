@@ -7,18 +7,6 @@ import Layout from '../components/Layout'
 import { formatDate } from '../utils/helpers/formateDate'
 import { useQuery } from '@tanstack/react-query'
 
-// const tags = [
-//     'design',
-//     'front-end',
-//     'back-end',
-//     'devops',
-//     'database',
-//     'productivity',
-//     'auth',
-//     'analytics',
-//     'public apis',
-// ]
-
 interface Props {
     data: {
         tools: Tool[]
@@ -28,12 +16,17 @@ interface Props {
 
 const Home: NextPage<Props> = (props) => {
     // const openGoogle = () => {
-    //     window.open('http://localhost:8080/api/auth/github', '_self')
+    //     window.open(
+    //         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/github`,
+    //         '_self',
+    //     )
     // }
+
+    console.log(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/github`)
 
     const [selected, setSelected] = useState('All')
 
-    const { data: tools, isLoading } = useQuery(
+    const { data: tools } = useQuery(
         ['tools', selected],
         () =>
             apiClient
@@ -52,7 +45,6 @@ const Home: NextPage<Props> = (props) => {
         <Layout title="Web Tools">
             <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
                 <h1 className="font-bold capitalize text-secondary-main">
-                    {isLoading && 'Loading '}
                     {selected} Tools
                 </h1>
             </div>
