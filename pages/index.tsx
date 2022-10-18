@@ -55,10 +55,17 @@ const Home: NextPage<Props> = (props) => {
         },
     )
 
+    const [searchTerm, setSearchTerm] = useState('')
     const selectedButtonClasses = 'border-b-2 border-b-primary-main'
 
+    console.log(searchTerm)
+
     return (
-        <Layout title="Web Tools">
+        <Layout
+            title="Web Tools"
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+        >
             <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
                 <h1 className="font-bold capitalize text-secondary-main">
                     {selected} Tools

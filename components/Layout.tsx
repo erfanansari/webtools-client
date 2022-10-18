@@ -5,6 +5,8 @@ interface Props extends React.PropsWithChildren {
     title?: string
     keywords?: string
     description?: string
+    searchTerm?: string
+    setSearchTerm?: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Layout: React.FC<Props> = ({
@@ -12,6 +14,8 @@ const Layout: React.FC<Props> = ({
     keywords,
     description,
     children,
+    searchTerm,
+    setSearchTerm,
 }) => {
     return (
         <div>
@@ -20,8 +24,8 @@ const Layout: React.FC<Props> = ({
                 <meta name="keywords" content={keywords} />
                 <meta name="description" content={description} />
             </Head>
-            <Header />
-            <main className="pt-24 custom-container">{children}</main>
+            <Header searchTerm={searchTerm!} setSearchTerm={setSearchTerm!} />
+            <main className="pt-32 md:pt-24 custom-container">{children}</main>
             {/* <Footer /> */}
         </div>
     )

@@ -7,7 +7,12 @@ import { useScrollDir } from '../utils/hooks/useScrollDir'
 const linkClasses =
     'text-neutral-light border-transparent border-t-2 transition-all border-b-2 pb-[6px] hover:border-b-primary-main'
 
-const Header: React.FC = () => {
+interface Props {
+    searchTerm: string
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Header: React.FC<Props> = ({ searchTerm, setSearchTerm }) => {
     const router = useRouter()
 
     const { scrollDir } = useScrollDir()
@@ -22,7 +27,7 @@ const Header: React.FC = () => {
             }
             fixed top-0 z-10 w-full text-white transition-transform duration-300 bg-secondary-main`}
         >
-            <div className="flex items-center justify-between h-20 sm:h-24 custom-container">
+            <div className="flex items-center justify-between h-20 md:h-24 custom-container">
                 <div className="flex items-center cursor-pointer">
                     <Image
                         className="mt-[1px]"
@@ -34,10 +39,17 @@ const Header: React.FC = () => {
                     <Link href="/" className="text-black">
                         <h1 className="ml-2 text-3xl font-bold">Web Tools</h1>
                     </Link>
+                    <input
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="text-black hidden md:block px-4 py-[.25rem] md:w-36 lg:w-52 border outline-none ml-8 rounded-full"
+                        placeholder="Search Tools..."
+                        type="text"
+                    />
                 </div>
                 <Link href="/bookmarks">
                     <a
-                        className={`hidden ml-auto mr-12 sm:block mt-[6px] ${linkClasses} ${
+                        className={`hidden ml-auto md:mr-6 lg:mr-12 md:block mt-[6px] ${linkClasses} ${
                             router.pathname === '/bookmarks'
                                 ? 'border-b-primary-main'
                                 : ''
@@ -52,7 +64,7 @@ const Header: React.FC = () => {
                     <IoLogoGithub className="ml-2" size={25} />
                 </button>
             </div>
-            <div className="flex justify-between pb-4 mx-6 sm:hidden">
+            <div className="flex justify-between pb-4 mx-6 md:hidden">
                 <Link href="/bookmarks">
                     <a
                         className={`${linkClasses} ${
@@ -64,6 +76,13 @@ const Header: React.FC = () => {
                         Bookmarks
                     </a>
                 </Link>
+                <input
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="text-black px-4 py-[.25rem] w-52 border outline-none ml-8 rounded-full"
+                    placeholder="Search Tools..."
+                    type="text"
+                />
             </div>
         </header>
     )
