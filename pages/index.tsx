@@ -40,7 +40,7 @@ const Home: NextPage<Props> = (props) => {
                     url: `/tools`,
                     params: {
                         page: pageParam,
-                        limit: 2,
+                        limit: 3,
                         ...(noSearchTerm ? {} : { query: searchTerm }),
                         ...(noTag ? {} : { tag }),
                     },
@@ -57,8 +57,6 @@ const Home: NextPage<Props> = (props) => {
         )
 
     const selectedButtonClasses = 'border-b-2 border-b-primary-main'
-
-    console.log(searchTerm)
 
     return (
         <Layout

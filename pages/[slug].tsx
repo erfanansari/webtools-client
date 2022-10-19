@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import { apiClient } from '../apiClient'
 import Layout from '../components/Layout'
 
@@ -10,11 +9,12 @@ interface Props {
 const Slug: NextPage<Props> = ({ tool }) => {
     return (
         <Layout title={tool.name}>
-            <Link href="/">
-                <h1 style={{ color: 'red', cursor: 'pointer' }}>Spaces</h1>
-            </Link>
-            <h2 className="">name: {tool.name}</h2>
-            <h2 className="">slug: {tool.slug}</h2>
+            <h2 className="">{tool.name}</h2>
+            <h2 className="">{tool.slug}</h2>
+            <h2 className="">{tool.description}</h2>
+            <h2 className="">{tool.tag}</h2>
+            <h2 className="">{tool.url}</h2>
+            <h2 className="">{tool.createdAt}</h2>
         </Layout>
     )
 }
