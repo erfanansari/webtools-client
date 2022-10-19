@@ -6,6 +6,15 @@ module.exports = {
     ],
     theme: {
         extend: {
+            animation: {
+                fade: 'fade 0.3s ease-in-out',
+            },
+            keyframes: {
+                fade: {
+                    '0%': { opacity: 0 },
+                    '100%': { opacity: 1 },
+                },
+            },
             screens: {
                 'sm': '640px',
                 // => @media (min-width: 640px) { ... }

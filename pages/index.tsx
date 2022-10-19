@@ -42,7 +42,7 @@ const Home: NextPage<Props> = (props) => {
                     params: {
                         tag: selected === 'All' ? '' : selected,
                         page: pageParam,
-                        limit: 9,
+                        limit: 2,
                     },
                 })
                 .then((res) => res.data),
@@ -92,7 +92,7 @@ const Home: NextPage<Props> = (props) => {
                         {page.tools.map((tool, i) => (
                             <div
                                 key={tool.slug}
-                                className="w-full overflow-hidden bg-white rounded-2xl md:w-full shadow-cart"
+                                className="w-full overflow-hidden animate-fade bg-white rounded-2xl md:w-full shadow-cart"
                                 style={{
                                     WebkitBackfaceVisibility: 'hidden',
                                     MozBackfaceVisibility: 'hidden',
@@ -116,8 +116,16 @@ const Home: NextPage<Props> = (props) => {
                                     <p className="text-secondary-main mt-4 mb-6 opacity-[.4]">
                                         {formatDate(tool.createdAt)}
                                     </p>
-                                    <h2 className="mb-6 text-2xl font-semibold capitalize transition-colors">
-                                        {tool.name}
+                                    <h2
+                                        id={tool.slug}
+                                        className="mb-6 text-2xl font-semibold capitalize transition-colors"
+                                        style={{
+                                            scrollMarginTop: '700px',
+                                        }}
+                                    >
+                                        <a href={`#${tool.slug}`}>
+                                            {tool.name}
+                                        </a>
                                     </h2>
                                     <p className="min-h-[70px] max-h-[70px] text-secondary-main text-ellipsis overflow-hidden whitespace-pre-wrap mb-4">
                                         {tool.description}
