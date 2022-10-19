@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Footer from './Footer'
 import Header from './Header'
 
 interface Props extends React.PropsWithChildren {
@@ -26,7 +27,7 @@ const Layout: React.FC<Props> = ({
             </Head>
             <Header searchTerm={searchTerm!} setSearchTerm={setSearchTerm!} />
             <main className="pt-32 md:pt-24 custom-container">{children}</main>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     )
 }

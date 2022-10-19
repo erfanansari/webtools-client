@@ -28,25 +28,25 @@ const Header: React.FC<Props> = ({ searchTerm, setSearchTerm }) => {
             fixed top-0 z-10 w-full text-white transition-transform duration-300 bg-secondary-main`}
         >
             <div className="flex items-center justify-between h-20 md:h-24 custom-container">
-                <div className="flex items-center cursor-pointer">
-                    <Image
-                        className="mt-[1px]"
-                        src="/white-gear.png"
-                        width={40}
-                        height={30}
-                        alt="logo"
-                    />
-                    <Link href="/" className="text-black">
+                <Link href="/" className="text-black">
+                    <div className="flex items-center cursor-pointer">
+                        <Image
+                            className="mt-[1px]"
+                            src="/white-gear.png"
+                            width={40}
+                            height={30}
+                            alt="logo"
+                        />
                         <h1 className="ml-2 text-3xl font-bold">Web Tools</h1>
-                    </Link>
-                    <input
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="text-black hidden md:block px-4 py-[.25rem] md:w-36 lg:w-52 border outline-none ml-8 rounded-full"
-                        placeholder="Search Tools..."
-                        type="text"
-                    />
-                </div>
+                    </div>
+                </Link>
+                <input
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="text-black hidden md:block px-4 py-[.25rem] md:w-36 lg:w-52 border outline-none ml-8 rounded-full"
+                    placeholder="Search Tools..."
+                    type="text"
+                />
                 <Link href="/bookmarks">
                     <a
                         className={`hidden ml-auto md:mr-6 lg:mr-12 md:block mt-[6px] ${linkClasses} ${

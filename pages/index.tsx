@@ -97,6 +97,7 @@ const Home: NextPage<Props> = (props) => {
                                     t === tag ? selectedButtonClasses : ''
                                 }`}
                                 onClick={() => {
+                                    console.log({ t })
                                     setTag(t)
                                 }}
                             >
@@ -183,7 +184,7 @@ const Home: NextPage<Props> = (props) => {
                     {hasNextPage && (
                         <button
                             onClick={() => fetchNextPage()}
-                            className="mb-8 flex mx-auto btn-secondary"
+                            className="mb-8 flex mx-auto btn-secondary mt-8"
                         >
                             More
                         </button>
