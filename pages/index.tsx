@@ -2,7 +2,11 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
 import { apiClient } from '../apiClient'
-import { IoChevronForward } from 'react-icons/io5'
+import {
+    IoBookmark,
+    IoBookmarkOutline,
+    IoChevronForward,
+} from 'react-icons/io5'
 import Layout from '../components/Layout'
 import { formatDate } from '../utils/helpers/formateDate'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -40,7 +44,7 @@ const Home: NextPage<Props> = (props) => {
                     url: `/tools`,
                     params: {
                         page: pageParam,
-                        limit: 3,
+                        limit: 1,
                         ...(noSearchTerm ? {} : { query: searchTerm }),
                         ...(noTag ? {} : { tag }),
                     },
@@ -57,6 +61,14 @@ const Home: NextPage<Props> = (props) => {
         )
 
     const selectedButtonClasses = 'border-b-2 border-b-primary-main'
+
+    const [bookmarked, setBookmarked] = useState(false)
+
+    const bookmarkIconProps = {
+        size: 25,
+        className: `cursor-pointer mb-2 animate-bookmark`,
+        onClick: () => setBookmarked(!bookmarked),
+    }
 
     return (
         <Layout
@@ -121,9 +133,20 @@ const Home: NextPage<Props> = (props) => {
                                             />
                                         </div>
                                         <div className="px-6">
-                                            <p className="text-secondary-main mt-4 mb-6 opacity-[.4]">
-                                                {formatDate(tool.createdAt)}
-                                            </p>
+                                            <div className="flex items-center justify-between text-secondary-main opacity-[.4]">
+                                                <p className="mt-4 mb-6">
+                                                    {formatDate(tool.createdAt)}
+                                                </p>
+                                                {bookmarked ? (
+                                                    <IoBookmark
+                                                        {...bookmarkIconProps}
+                                                    />
+                                                ) : (
+                                                    <IoBookmarkOutline
+                                                        {...bookmarkIconProps}
+                                                    />
+                                                )}
+                                            </div>
                                             <h2
                                                 id={tool.slug}
                                                 className="mb-6 text-2xl font-semibold capitalize transition-colors"

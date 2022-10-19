@@ -8,11 +8,17 @@ module.exports = {
         extend: {
             animation: {
                 fade: 'fade 0.3s ease-in-out',
+                bookmark: 'bookmark 0.25s cubic-bezier(0, 0, 0.2, 1)',
             },
             keyframes: {
                 fade: {
                     '0%': { opacity: 0 },
                     '100%': { opacity: 1 },
+                },
+                bookmark: {
+                    '0%': { transform: 'scale(1)' },
+                    '75%': { transform: 'scale(1.2)' },
+                    '100%': { transform: 'scale(1)' },
                 },
             },
             screens: {
