@@ -17,6 +17,16 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
 
     const { scrollDir } = useScrollDir()
 
+    const inputProps = {
+        value: query,
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+            setQuery(e.target.value),
+        placeholder: 'Search Tools...',
+        type: 'search',
+        className:
+            'rounded-full border outline-none ml-8 text-secondary-dark px-4',
+    }
+
     return (
         <header
             className={`
@@ -41,11 +51,11 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                     </div>
                 </Link>
                 <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className="text-black hidden md:block px-4 py-[.25rem] md:w-36 lg:w-52 border outline-none ml-8 rounded-full"
-                    placeholder="Search Tools..."
-                    type="text"
+                    {...inputProps}
+                    className={[
+                        inputProps.className,
+                        'hidden md:block py-[.25rem] md:w-36 lg:w-52',
+                    ].join(' ')}
                 />
                 <Link href="/bookmarks">
                     <a
@@ -77,11 +87,10 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                     </a>
                 </Link>
                 <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className="text-black px-4 py-[.25rem] w-52 border outline-none ml-8 rounded-full"
-                    placeholder="Search Tools..."
-                    type="text"
+                    {...inputProps}
+                    className={[inputProps.className, 'py-[.25rem] w-52'].join(
+                        ' ',
+                    )}
                 />
             </div>
         </header>
