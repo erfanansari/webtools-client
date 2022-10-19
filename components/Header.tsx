@@ -8,11 +8,11 @@ const linkClasses =
     'text-neutral-light border-transparent border-t-2 transition-all border-b-2 pb-[6px] hover:border-b-primary-main'
 
 interface Props {
-    searchTerm: string
-    setSearchTerm: React.Dispatch<React.SetStateAction<string>>
+    query: string
+    setQuery: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Header: React.FC<Props> = ({ searchTerm, setSearchTerm }) => {
+const Header: React.FC<Props> = ({ query, setQuery }) => {
     const router = useRouter()
 
     const { scrollDir } = useScrollDir()
@@ -41,8 +41,8 @@ const Header: React.FC<Props> = ({ searchTerm, setSearchTerm }) => {
                     </div>
                 </Link>
                 <input
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     className="text-black hidden md:block px-4 py-[.25rem] md:w-36 lg:w-52 border outline-none ml-8 rounded-full"
                     placeholder="Search Tools..."
                     type="text"
@@ -77,8 +77,8 @@ const Header: React.FC<Props> = ({ searchTerm, setSearchTerm }) => {
                     </a>
                 </Link>
                 <input
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     className="text-black px-4 py-[.25rem] w-52 border outline-none ml-8 rounded-full"
                     placeholder="Search Tools..."
                     type="text"

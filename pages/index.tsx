@@ -28,24 +28,20 @@ const Home: NextPage<Props> = (props) => {
     // }
 
     const [tag, setTag] = useState('All')
-    const [searchTerm, setSearchTerm] = useState('')
+    const [query, setQuery] = useState('')
     const noTag = tag === 'All'
-    const noSearchTerm = searchTerm === ''
+    const noQuery = query === ''
 
     const { data, fetchNextPage, hasNextPage, error, isError } =
         useInfiniteQuery(
-            [
-                'tools',
-                ...(noTag ? [] : [tag]),
-                ...(noSearchTerm ? [] : [searchTerm]),
-            ],
+            ['tools', ...(noTag ? [] : [tag]), ...(noQuery ? [] : [query])],
             ({ pageParam = 1, signal }) =>
                 apiClient<ToolsData>({
                     url: `/tools`,
                     params: {
                         page: pageParam,
                         limit: 1,
-                        ...(noSearchTerm ? {} : { query: searchTerm }),
+                        ...(noQuery ? {} : { query }),
                         ...(noTag ? {} : { tag }),
                     },
                     signal,
@@ -71,11 +67,7 @@ const Home: NextPage<Props> = (props) => {
     }
 
     return (
-        <Layout
-            title="Web Tools"
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-        >
+        <Layout title="Web Tools" query={query} setQuery={setQuery}>
             <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
                 {isError ? (
                     <h1 className="font-bold capitalize text-red-500">
