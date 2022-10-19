@@ -4,47 +4,42 @@ import { apiClient } from '../apiClient'
 import Layout from '../components/Layout'
 
 interface Props {
-    space: Space
+    tool: Tool
 }
 
-const Slug: NextPage<Props> = ({ space }) => {
+const Slug: NextPage<Props> = ({ tool }) => {
     return (
-        <Layout title={space.title}>
+        <Layout title={tool.name}>
             <Link href="/">
                 <h1 style={{ color: 'red', cursor: 'pointer' }}>Spaces</h1>
             </Link>
-            <h2 className="">slug: {space.slug}</h2>
-            <ul>
-                {space.tools.map((tool: Tool) => (
-                    <div key={tool.slug}>
-                        <li>name: {tool.name}</li>
-                        <li>description: {tool.description}</li>
-                        <li>link: {tool.url}</li>
-                        <li>createAt: {tool.createdAt}</li>
-                        <br />
-                    </div>
-                ))}
-            </ul>
+            <h2 className="">name: {tool.name}</h2>
+            <h2 className="">slug: {tool.slug}</h2>
         </Layout>
     )
 }
 
 export async function getStaticPaths() {
-    const { data: spaces } = await apiClient.get<Space[]>('/spaces')
+    const toolsData = await apiClient<ToolsData>({
+        url: '/tools',
+    })
+    const tools = toolsData.tools
 
-    const paths = spaces.map((space) => ({
-        params: { slug: space.slug },
+    const paths = tools.map((tool) => ({
+        params: { slug: tool.slug },
     }))
 
     return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-    const { data: space } = await apiClient.get<Space>(`/spaces/${params.slug}`)
+    const tool = await apiClient<Tool>({
+        url: `/tools/${params.slug}`,
+    })
 
     return {
         props: {
-            space,
+            tool,
         },
     }
 }
