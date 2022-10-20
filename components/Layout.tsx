@@ -19,7 +19,7 @@ const Layout: React.FC<Props> = ({
     setQuery,
 }) => {
     return (
-        <div>
+        <div className="min-h-[100vh] flex justify-between flex-col">
             <Head>
                 <title>{title}</title>
                 <meta name="keywords" content={keywords} />

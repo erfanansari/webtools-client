@@ -40,7 +40,7 @@ const Home: NextPage<Props> = (props) => {
                     url: `/tools`,
                     params: {
                         page: pageParam,
-                        limit: 1,
+                        limit: 3,
                         ...(noQuery ? {} : { query }),
                         ...(noTag ? {} : { tag }),
                     },
