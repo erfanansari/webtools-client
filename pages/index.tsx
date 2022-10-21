@@ -12,6 +12,7 @@ import { formatDate } from '../utils/helpers/formateDate'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 
+const limit = 3
 interface Props {
     data: {
         toolsData: ToolsData
@@ -32,7 +33,9 @@ const Home: NextPage<Props> = (props) => {
     const noTag = tag === 'All'
     const noQuery = query === ''
 
-    const { data, fetchNextPage, hasNextPage, error, isError } =
+    const [fade, setFade] = useState(false)
+
+    const { data, fetchNextPage, hasNextPage, isFetching, error, isError } =
         useInfiniteQuery(
             ['tools', ...(noTag ? [] : [tag]), ...(noQuery ? [] : [query])],
             ({ pageParam = 1, signal }) =>
@@ -40,7 +43,7 @@ const Home: NextPage<Props> = (props) => {
                     url: `/tools`,
                     params: {
                         page: pageParam,
-                        limit: 3,
+                        limit,
                         ...(noQuery ? {} : { query }),
                         ...(noTag ? {} : { tag }),
                     },
@@ -75,7 +78,19 @@ const Home: NextPage<Props> = (props) => {
                     </h1>
                 ) : (
                     <h1 className="font-bold capitalize text-secondary-main">
-                        {tag} Tools
+                        {isFetching ? (
+                            'Updating'
+                        ) : query ? (
+                            <span
+                                style={{
+                                    textTransform: 'initial',
+                                }}
+                            >
+                                Results for {query}
+                            </span>
+                        ) : (
+                            `${tag} Tools`
+                        )}
                     </h1>
                 )}
             </div>
@@ -90,6 +105,7 @@ const Home: NextPage<Props> = (props) => {
                                 }`}
                                 onClick={() => {
                                     console.log({ t })
+                                    setFade(false)
                                     setTag(t)
                                 }}
                             >
@@ -103,7 +119,12 @@ const Home: NextPage<Props> = (props) => {
                                 {page.tools.map((tool, i) => (
                                     <div
                                         key={tool.slug}
-                                        className="w-full overflow-hidden animate-fade bg-white rounded-2xl md:w-full shadow-cart"
+                                        className={[
+                                            'w-full overflow-hidden bg-white rounded-2xl md:w-full shadow-cart',
+                                            fade && page.info.prev
+                                                ? 'animate-fade'
+                                                : '',
+                                        ].join(' ')}
                                         style={{
                                             WebkitBackfaceVisibility: 'hidden',
                                             MozBackfaceVisibility: 'hidden',
@@ -175,10 +196,13 @@ const Home: NextPage<Props> = (props) => {
                     </div>
                     {hasNextPage && (
                         <button
-                            onClick={() => fetchNextPage()}
+                            onClick={() => {
+                                fetchNextPage()
+                                setFade(true)
+                            }}
                             className="mb-8 flex mx-auto btn-secondary mt-8"
                         >
-                            More
+                            {isFetching ? 'Fetching' : 'More'}
                         </button>
                     )}
                 </>
@@ -194,6 +218,9 @@ export async function getStaticProps() {
         }),
         apiClient<ToolsData>({
             url: '/tools',
+            params: {
+                limit,
+            },
         }),
     ])
 
