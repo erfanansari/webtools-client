@@ -47,7 +47,7 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                             height={30}
                             alt="logo"
                         />
-                        <h1 className="ml-2 text-3xl font-bold">Web Tools</h1>
+                        <h1 className="ml-2 text-3xl font-bold">WebTools</h1>
                     </div>
                 </Link>
                 <input
