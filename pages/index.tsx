@@ -100,7 +100,7 @@ const Home: NextPage<Props> = (props) => {
                         {['All', ...props.data.tags].map((t) => (
                             <button
                                 key={t}
-                                className={`transition-all mx-3 min-w-fit text-lg text-neutral-dark hover:border-b-primary-main hover:border-b-2 capitalize ${
+                                className={`transition-all mx-3 min-w-fit text-lg text-neutral-dark hover:border-b-primary-main hover:border-b-2 ${
                                     t === tag ? selectedButtonClasses : ''
                                 }`}
                                 onClick={() => {
