@@ -48,6 +48,7 @@ const Home: NextPage<Props> = (props) => {
                     pages: [props.data.toolsData],
                     pageParams: [1],
                 },
+                refetchOnWindowFocus: false,
                 onError: (err: any) => console.log(err),
             },
         )
