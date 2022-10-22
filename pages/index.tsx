@@ -21,13 +21,6 @@ interface Props {
 }
 
 const Home: NextPage<Props> = (props) => {
-    // const openGoogle = () => {
-    //     window.open(
-    //         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/github`,
-    //         '_self',
-    //     )
-    // }
-
     const [tag, setTag] = useState('All')
     const [query, setQuery] = useState('')
     const noTag = tag === 'All'

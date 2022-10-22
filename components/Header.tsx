@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { IoLogoGithub } from 'react-icons/io5'
+import { baseURL } from '../apiClient'
 import { useScrollDir } from '../utils/hooks/useScrollDir'
 
 const linkClasses =
@@ -25,6 +26,10 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
         type: 'search',
         className:
             'rounded-full border outline-none ml-8 text-secondary-dark px-4',
+    }
+
+    const login = () => {
+        window.open(`${baseURL}/auth/github`, '_self')
     }
 
     return (
@@ -68,7 +73,10 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                         Bookmarks
                     </a>
                 </Link>
-                <button className="flex items-center btn-primary">
+                <button
+                    onClick={login}
+                    className="flex items-center btn-primary"
+                >
                     <p>Login</p>
                     <p className="hidden md:block">&nbsp;via GitHub</p>
                     <IoLogoGithub className="ml-2" size={25} />
