@@ -29,7 +29,7 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
     }
 
     const login = () => {
-        window.open(`${baseURL}/auth/github`, '_self')
+        // window.open(`${baseURL}/auth/github`, '_self')
     }
 
     return (
