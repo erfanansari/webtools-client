@@ -1,3 +1,5 @@
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -15,6 +17,24 @@ interface Props {
 
 const Header: React.FC<Props> = ({ query, setQuery }) => {
     const router = useRouter()
+    const queryClient = useQueryClient().getQueryData(['user'])
+    console.log(queryClient)
+    const isAdmin = (queryClient as User)?.role === 'admin'
+
+    const { data, isLoading } = useQuery(
+        ['user'],
+        () =>
+            axios
+                .get<User>(`${baseURL.replace('/api', '')}/oauth/user`, {
+                    withCredentials: true,
+                })
+                .then((res) => res.data),
+        {
+            onError: (err: any) => {
+                console.log(err)
+            },
+        },
+    )
 
     const { scrollDir } = useScrollDir()
 
@@ -28,8 +48,10 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
             'rounded-full border outline-none ml-8 text-secondary-dark px-4',
     }
 
+    const path = `${baseURL.replace('/api', '')}/oauth/authorize`
+
     const login = () => {
-        // window.open(`${baseURL}/auth/github`, '_self')
+        window.open(path, '_self')
     }
 
     return (
@@ -62,9 +84,22 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                         'hidden md:block py-[.25rem] md:w-36 lg:w-52',
                     ].join(' ')}
                 />
+                {isAdmin && (
+                    <Link href="/admin">
+                        <a
+                            className={`hidden ml-auto mr-10 md:block mt-[6px] ${linkClasses} ${
+                                router.pathname === '/admin'
+                                    ? 'border-b-primary-main'
+                                    : ''
+                            }`}
+                        >
+                            Admin
+                        </a>
+                    </Link>
+                )}
                 <Link href="/bookmarks">
                     <a
-                        className={`hidden ml-auto md:mr-6 lg:mr-12 md:block mt-[6px] ${linkClasses} ${
+                        className={`hidden md:mr-6 lg:mr-12 md:block mt-[6px] ${linkClasses} ${
                             router.pathname === '/bookmarks'
                                 ? 'border-b-primary-main'
                                 : ''
@@ -73,14 +108,32 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                         Bookmarks
                     </a>
                 </Link>
-                <button
-                    onClick={login}
-                    className="flex items-center btn-primary"
-                >
-                    <p>Login</p>
-                    <p className="hidden md:block">&nbsp;via GitHub</p>
-                    <IoLogoGithub className="ml-2" size={25} />
-                </button>
+                {isLoading ? (
+                    'Loading...'
+                ) : data ? (
+                    <div>
+                        <div className="flex items-center">
+                            <h1 className="mr-4">{data?.name}</h1>
+                            <Image
+                                className="rounded-full"
+                                src={data?.avatar || ''}
+                                width={40}
+                                height={40}
+                                alt="profile"
+                            />
+                        </div>
+                        {/* <h2>{data?.email}</h2> */}
+                    </div>
+                ) : (
+                    <button
+                        onClick={login}
+                        className="flex items-center btn-primary"
+                    >
+                        <p>Login</p>
+                        <p className="hidden md:block">&nbsp;via GitHub</p>
+                        <IoLogoGithub className="ml-2" size={25} />
+                    </button>
+                )}
             </div>
             <div className="flex justify-between pb-4 mx-6 md:hidden">
                 <Link href="/bookmarks">

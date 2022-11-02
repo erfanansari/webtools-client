@@ -8,6 +8,7 @@ const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true,
 })
 
 // add a second `options` argument here if you want to pass extra options to each generated query
@@ -30,30 +31,3 @@ export const apiClient = <T>(
 
     return promise
 }
-
-// apiClient.interceptors.request.use((config) => {
-//     const token = Cookies.get('token')
-//     if (!token) return config
-
-//     return {
-//         ...config,
-//         headers: {
-//             ...config.headers,
-//             Authorization: `Token ${token}`,
-//         },
-//     }
-// })
-
-// apiClient.interceptors.response.use(
-//     (res) => res,
-//     (err) => {
-//         console.log(err.message)
-
-//         if (err.response.status === 401) {
-//             Cookies.remove('token')
-//             window.location.href = '/auth/login'
-//             console.log(err.response.data, '401')
-//         }
-//         return Promise.reject(err)
-//     },
-// )

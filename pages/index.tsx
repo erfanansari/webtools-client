@@ -49,7 +49,7 @@ const Home: NextPage<Props> = (props) => {
                     pageParams: [1],
                 },
                 refetchOnWindowFocus: false,
-                onError: (err: any) => console.log(err),
+                onError: (err) => console.log(err),
             },
         )
 
