@@ -113,7 +113,9 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                 ) : data ? (
                     <div>
                         <div className="flex items-center">
-                            <h1 className="mr-4">{data?.name}</h1>
+                            <h1 className="mr-4 cursor-default">
+                                {data?.name}
+                            </h1>
                             <Image
                                 className="rounded-full"
                                 src={data?.avatar || ''}

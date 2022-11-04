@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
                     </div>
                 </Link>
                 <div className="flex items-center">
-                    <h2 className="text-sm">
+                    <h2 className="text-sm cursor-default">
                         Created with{' '}
                         <IoHeart
                             className="text-red-500"

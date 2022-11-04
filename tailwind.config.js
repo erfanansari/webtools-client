@@ -47,6 +47,7 @@ module.exports = {
                 },
                 secondary: {
                     main: '#03032d',
+                    light: '#1a1a3d',
                     dark: '#10091d',
                 },
                 neutral: {
