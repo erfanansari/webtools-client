@@ -45,7 +45,7 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
         placeholder: 'Search Tools...',
         type: 'search',
         className:
-            'rounded-full border outline-none ml-8 text-secondary-dark px-4',
+            'rounded-full border outline-none ml-2 md:ml-8 text-secondary-dark px-4',
     }
 
     const path = `${baseURL.replace('/api', '')}/oauth/authorize`
@@ -77,84 +77,107 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
                         <h1 className="ml-2 text-3xl font-bold">WebTools</h1>
                     </div>
                 </Link>
-                <input
-                    {...inputProps}
-                    className={[
-                        inputProps.className,
-                        'hidden md:block py-[.25rem] md:w-36 lg:w-52',
-                    ].join(' ')}
-                />
-                {isAdmin && (
-                    <Link href="/admin">
+                {router.pathname === '/' && (
+                    <input
+                        {...inputProps}
+                        className={[
+                            inputProps.className,
+                            'hidden 2md:block py-[.25rem] md:w-36 lg:w-52',
+                        ].join(' ')}
+                    />
+                )}
+                <div className="ml-auto flex mt-[6px]">
+                    {isAdmin && (
+                        <Link href="/admin">
+                            <a
+                                className={`hidden sm:mr-4 lg:mr-8 2md:block ${linkClasses} ${
+                                    router.pathname === '/admin'
+                                        ? 'border-b-primary-main'
+                                        : ''
+                                }`}
+                            >
+                                Admin
+                            </a>
+                        </Link>
+                    )}
+                    <Link href="/bookmarks">
                         <a
-                            className={`hidden ml-auto mr-10 md:block mt-[6px] ${linkClasses} ${
-                                router.pathname === '/admin'
+                            className={`hidden sm:mr-4 lg:mr-8 2md:block ${linkClasses} ${
+                                router.pathname === '/bookmarks'
                                     ? 'border-b-primary-main'
                                     : ''
                             }`}
                         >
-                            Admin
+                            Bookmarks
                         </a>
                     </Link>
-                )}
-                <Link href="/bookmarks">
-                    <a
-                        className={`hidden md:mr-6 lg:mr-12 md:block mt-[6px] ${linkClasses} ${
-                            router.pathname === '/bookmarks'
-                                ? 'border-b-primary-main'
-                                : ''
-                        }`}
-                    >
-                        Bookmarks
-                    </a>
-                </Link>
-                {isLoading ? (
-                    'Loading...'
-                ) : data ? (
-                    <div>
-                        <div className="flex items-center">
-                            <h1 className="mr-4 cursor-default">
-                                {data?.name}
-                            </h1>
-                            <Image
-                                className="rounded-full"
-                                src={data?.avatar || ''}
-                                width={40}
-                                height={40}
-                                alt="profile"
-                            />
+                </div>
+                <div className="min-w-[150px] sm:min-w-[200px]">
+                    {isLoading ? (
+                        <p className="text-center">Loading...</p>
+                    ) : data ? (
+                        <div>
+                            <div className="flex items-center justify-center">
+                                <h1 className="mr-4 cursor-default">
+                                    {data?.name}
+                                </h1>
+                                <Image
+                                    className="rounded-full"
+                                    src={data?.avatar || ''}
+                                    width={40}
+                                    height={40}
+                                    alt="profile"
+                                />
+                            </div>
                         </div>
-                        {/* <h2>{data?.email}</h2> */}
-                    </div>
-                ) : (
-                    <button
-                        onClick={login}
-                        className="flex items-center btn-primary"
-                    >
-                        <p>Login</p>
-                        <p className="hidden md:block">&nbsp;via GitHub</p>
-                        <IoLogoGithub className="ml-2" size={25} />
-                    </button>
-                )}
-            </div>
-            <div className="flex justify-between pb-4 mx-6 md:hidden">
-                <Link href="/bookmarks">
-                    <a
-                        className={`${linkClasses} ${
-                            router.pathname === '/bookmarks'
-                                ? 'border-b-primary-main'
-                                : ''
-                        }`}
-                    >
-                        Bookmarks
-                    </a>
-                </Link>
-                <input
-                    {...inputProps}
-                    className={[inputProps.className, 'py-[.25rem] w-52'].join(
-                        ' ',
+                    ) : (
+                        <button
+                            onClick={login}
+                            className="flex items-center btn-primary mx-auto"
+                        >
+                            <p>Login</p>
+                            <p className="hidden sm:block">&nbsp;via GitHub</p>
+                            <IoLogoGithub className="ml-2" size={25} />
+                        </button>
                     )}
-                />
+                </div>
+            </div>
+            <div className="flex justify-between pb-4 mx-6 2md:hidden">
+                <div className="mt-[3px]">
+                    <Link href="/bookmarks">
+                        <a
+                            className={`${linkClasses} mr-1 md:mr-8 ${
+                                router.pathname === '/bookmarks'
+                                    ? 'border-b-primary-main'
+                                    : ''
+                            }`}
+                        >
+                            Bookmarks
+                        </a>
+                    </Link>
+                    {isAdmin && (
+                        <Link href="/admin">
+                            <a
+                                className={`${linkClasses} ml-2 ${
+                                    router.pathname === '/admin'
+                                        ? 'border-b-primary-main'
+                                        : ''
+                                }`}
+                            >
+                                Admin
+                            </a>
+                        </Link>
+                    )}
+                </div>
+                {router.pathname === '/' && (
+                    <input
+                        {...inputProps}
+                        className={[
+                            inputProps.className,
+                            'py-[.25rem] w-40 sm:w-52',
+                        ].join(' ')}
+                    />
+                )}
             </div>
         </header>
     )
