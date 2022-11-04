@@ -1,6 +1,4 @@
-import { toast } from 'react-toastify'
-
-export function useErrorHandler() {
+export function useErrorHandler(cb: (...args: any[]) => void) {
     return (err: unknown) => {
         if (
             typeof err === 'object' &&
@@ -14,16 +12,14 @@ export function useErrorHandler() {
             'msg' in err.response.data &&
             typeof err.response.data.msg === 'string'
         ) {
-            toast.error(err.response.data.msg)
-            // return err.response.data.msg
+            cb(err.response.data.msg)
         } else if (
             typeof err === 'object' &&
             err !== null &&
             'message' in err &&
             typeof err.message === 'string'
         ) {
-            toast.error(err.message)
-            // return err.message
+            cb(err.message)
         }
     }
 }

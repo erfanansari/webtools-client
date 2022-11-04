@@ -12,7 +12,7 @@ function Admin() {
     const [description, setDescription] = useState('')
     const [url, setUrl] = useState('')
 
-    const handleError = useErrorHandler()
+    const handleError = useErrorHandler(toast.error)
 
     const { data: tags } = useQuery(
         ['tags'],
