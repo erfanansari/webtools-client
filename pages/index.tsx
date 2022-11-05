@@ -11,6 +11,8 @@ import Layout from '../components/Layout'
 import { formatDate } from '../utils/helpers/formateDate'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import Link from 'next/link'
+import { handleError } from '../utils/helpers/handleError'
+import { toast } from 'react-toastify'
 
 const limit = 3
 interface Props {
@@ -28,30 +30,36 @@ const Home: NextPage<Props> = (props) => {
 
     const [fade, setFade] = useState(false)
 
-    const { data, fetchNextPage, hasNextPage, isFetching, error, isError } =
-        useInfiniteQuery(
-            ['tools', ...(noTag ? [] : [tag]), ...(noQuery ? [] : [query])],
-            ({ pageParam = 1, signal }) =>
-                apiClient<ToolsData>({
-                    url: `/tools`,
-                    params: {
-                        page: pageParam,
-                        limit,
-                        ...(noQuery ? {} : { query }),
-                        ...(noTag ? {} : { tag }),
-                    },
-                    signal,
-                }),
-            {
-                getNextPageParam: (lastPage) => lastPage.info.next ?? undefined,
-                initialData: {
-                    pages: [props.data.toolsData],
-                    pageParams: [1],
+    const [error, setError] = useState<string | null>(null)
+
+    const onError = handleError((msg) => {
+        toast.error(msg)
+        setError(msg)
+    })
+
+    const toolsQuery = useInfiniteQuery<ToolsData>(
+        ['tools', ...(noTag ? [] : [tag]), ...(noQuery ? [] : [query])],
+        ({ pageParam = 1, signal }) =>
+            apiClient({
+                url: `/tools`,
+                params: {
+                    page: pageParam,
+                    limit,
+                    ...(noQuery ? {} : { query }),
+                    ...(noTag ? {} : { tag }),
                 },
-                refetchOnWindowFocus: false,
-                onError: (err) => console.log(err),
+                signal,
+            }),
+        {
+            getNextPageParam: (lastPage) => lastPage.info.next ?? undefined,
+            initialData: {
+                pages: [props.data.toolsData],
+                pageParams: [1],
             },
-        )
+            refetchOnWindowFocus: false,
+            onError,
+        },
+    )
 
     const selectedButtonClasses = 'border-b-2 border-b-primary-main'
 
@@ -66,13 +74,13 @@ const Home: NextPage<Props> = (props) => {
     return (
         <Layout title="Web Tools" query={query} setQuery={setQuery}>
             <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
-                {isError ? (
+                {toolsQuery.isError ? (
                     <h1 className="font-bold capitalize text-red-500">
-                        {error?.response?.data?.msg || error?.message}
+                        {error}
                     </h1>
                 ) : (
                     <h1 className="font-bold capitalize text-secondary-main">
-                        {isFetching ? (
+                        {toolsQuery.isFetching ? (
                             'Updating'
                         ) : query ? (
                             <span
@@ -88,7 +96,7 @@ const Home: NextPage<Props> = (props) => {
                     </h1>
                 )}
             </div>
-            {isError ? null : (
+            {toolsQuery.isError ? null : (
                 <>
                     <div className="flex h-12 max-w-full overflow-x-scroll tags">
                         {['All', ...props.data.tags].map((t) => (
@@ -108,7 +116,7 @@ const Home: NextPage<Props> = (props) => {
                         ))}
                     </div>
                     <div className="grid row-span-5 gap-8 pb-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-14">
-                        {data?.pages.map((page) => (
+                        {toolsQuery.data?.pages.map((page) => (
                             <Fragment key={page.info.next}>
                                 {page.tools.map((tool, i) => (
                                     <div
@@ -157,7 +165,7 @@ const Home: NextPage<Props> = (props) => {
                                             </div>
                                             <h2
                                                 id={tool.slug}
-                                                className="mb-6 text-2xl font-semibold capitalize transition-colors"
+                                                className="mb-6 text-2xl font-semibold transition-colors"
                                                 style={{
                                                     scrollMarginTop: '700px',
                                                 }}
@@ -188,15 +196,15 @@ const Home: NextPage<Props> = (props) => {
                             </Fragment>
                         ))}
                     </div>
-                    {hasNextPage && (
+                    {toolsQuery.hasNextPage && (
                         <button
                             onClick={() => {
-                                fetchNextPage()
+                                toolsQuery.fetchNextPage()
                                 setFade(true)
                             }}
                             className="mb-8 flex mx-auto btn-secondary mt-8"
                         >
-                            {isFetching ? 'Fetching' : 'More'}
+                            {toolsQuery.isFetching ? 'Fetching' : 'More'}
                         </button>
                     )}
                 </>

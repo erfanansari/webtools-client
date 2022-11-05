@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import slugify from 'slugify'
 import { apiClient } from '../apiClient'
 import Layout from '../components/Layout'
-import { useErrorHandler } from '../utils/hooks/useErrorHandler'
+import { handleError } from '../utils/helpers/handleError'
 
 function Admin() {
     const [name, setName] = useState('')
@@ -12,7 +12,7 @@ function Admin() {
     const [description, setDescription] = useState('')
     const [url, setUrl] = useState('')
 
-    const handleError = useErrorHandler(toast.error)
+    const onError = handleError(toast.error)
 
     const { data: tags } = useQuery(
         ['tags'],
@@ -27,11 +27,7 @@ function Admin() {
         },
     )
 
-    const {
-        data: tool,
-        refetch,
-        isFetching: isFinding,
-    } = useQuery(
+    const toolQuery = useQuery(
         ['tool'],
         () =>
             apiClient<Tool>({
@@ -50,14 +46,16 @@ function Admin() {
 
                 toast.success('Tool found!')
             },
-            onError: handleError,
+            onError,
             enabled: false,
         },
     )
 
-    const slug = slugify(tool ? tool.name : name, { lower: true })
+    const slug = slugify(toolQuery.data ? toolQuery.data.name : name, {
+        lower: true,
+    })
 
-    const { mutate: createTool, isLoading: isCreating } = useMutation(
+    const createMutation = useMutation(
         () =>
             apiClient<Tool>({
                 url: '/tools',
@@ -73,11 +71,11 @@ function Admin() {
             onSuccess: () => {
                 toast.success('Tool created!')
             },
-            onError: handleError,
+            onError,
         },
     )
 
-    const { mutate: updateTool, isLoading: isUpdating } = useMutation(
+    const updateMutation = useMutation(
         () =>
             apiClient<Tool>({
                 url: `/tools/${slug}`,
@@ -93,11 +91,11 @@ function Admin() {
             onSuccess: () => {
                 toast.success('Tool updated!')
             },
-            onError: handleError,
+            onError,
         },
     )
 
-    const { mutate: deleteTool, isLoading: isDeleting } = useMutation(
+    const deleteMutation = useMutation(
         () =>
             apiClient<Tool>({
                 url: `/tools/${slug}`,
@@ -111,7 +109,7 @@ function Admin() {
                 setUrl('')
                 toast.success('Tool deleted!')
             },
-            onError: handleError,
+            onError,
         },
     )
 
@@ -168,33 +166,35 @@ function Admin() {
                         disabled={disabled}
                         className="btn-primary h-9 mt-3 flex-1 mr-4"
                         type="button"
-                        onClick={() => createTool()}
+                        onClick={() => createMutation.mutate()}
                     >
-                        {isCreating ? 'Creating...' : 'Create Tool'}
+                        {createMutation.isLoading
+                            ? 'Creating...'
+                            : 'Create Tool'}
                     </button>
                     <button
                         disabled={!name}
                         className="btn-secondary text-lg py-0 px-4 h-9 mt-3 flex-1 mx-4"
-                        onClick={() => refetch()}
+                        onClick={() => toolQuery.refetch()}
                         type="button"
                     >
-                        {isFinding ? 'Finding...' : 'Find Tool'}
+                        {toolQuery.isFetching ? 'Finding...' : 'Find Tool'}
                     </button>
                     <button
-                        disabled={!tool || disabled}
+                        disabled={!toolQuery.data || disabled}
                         className="btn-primary h-9 mt-3 flex-1 mx-4"
-                        onClick={() => updateTool()}
+                        onClick={() => updateMutation.mutate()}
                         type="button"
                     >
-                        {isUpdating ? 'Updating' : 'Update Tool'}
+                        {updateMutation.isLoading ? 'Updating' : 'Update Tool'}
                     </button>
                     <button
-                        disabled={!tool || !name}
+                        disabled={!toolQuery.data || !name}
                         className="btn-primary bg-red-600 h-9 mt-3 flex-1 ml-4"
-                        onClick={() => deleteTool()}
+                        onClick={() => deleteMutation.mutate()}
                         type="button"
                     >
-                        {isDeleting ? 'Deleting' : 'Delete Tool'}
+                        {deleteMutation.isLoading ? 'Deleting' : 'Delete Tool'}
                     </button>
                 </div>
             </form>

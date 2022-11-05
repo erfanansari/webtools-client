@@ -23,6 +23,15 @@ export const apiClient = <T>(
         ...options,
         cancelToken: source.token,
     }).then(({ data }) => data)
+    // .catch((error: unknown) => {
+    //     if (isServerError(error)) {
+    //         throw error
+    //     }
+
+    //     if (axios.isAxiosError(error)) {
+    //         throw error
+    //     }
+    // })
 
     // @ts-ignore - it does exist
     promise.cancel = () => {

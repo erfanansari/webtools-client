@@ -11,6 +11,13 @@ const queryClient = new QueryClient({
             retry: false,
         },
     },
+    // queryCache: new QueryCache({
+    //     // https://tkdodo.eu/blog/react-query-error-handling
+    //     // https://tkdodo.eu/blog/react-query-and-type-script
+    //     onError: (err) => {
+    //         console.error(err)
+    //     },
+    // }),
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
