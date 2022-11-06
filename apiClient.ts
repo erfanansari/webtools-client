@@ -11,6 +11,46 @@ const axiosInstance = axios.create({
     withCredentials: true,
 })
 
+export interface ServerError {
+    response: {
+        data: {
+            msg: string
+        }
+        status: number
+    }
+}
+
+export function isServerError(err: unknown): err is ServerError {
+    return (
+        typeof err === 'object' &&
+        err !== null &&
+        'response' in err &&
+        typeof err.response === 'object' &&
+        err.response !== null &&
+        'data' in err.response &&
+        typeof err.response.data === 'object' &&
+        err.response.data !== null &&
+        'msg' in err.response.data &&
+        typeof err.response.data.msg === 'string'
+    )
+}
+
+export interface ClientError {
+    status: number | undefined
+    message: string
+}
+
+export function isClientError(err: unknown): err is ClientError {
+    return (
+        typeof err === 'object' &&
+        err !== null &&
+        'status' in err &&
+        (typeof err.status === 'number' || typeof err.status === 'undefined') &&
+        'message' in err &&
+        typeof err.message === 'string'
+    )
+}
+
 // add a second `options` argument here if you want to pass extra options to each generated query
 export const apiClient = <T>(
     config: AxiosRequestConfig,
@@ -22,16 +62,24 @@ export const apiClient = <T>(
         ...config,
         ...options,
         cancelToken: source.token,
-    }).then(({ data }) => data)
-    // .catch((error: unknown) => {
-    //     if (isServerError(error)) {
-    //         throw error
-    //     }
+    })
+        .then(({ data }) => data)
+        .catch((error: unknown) => {
+            const clientError: ClientError = {
+                status: undefined,
+                message: 'Something went wrong',
+            }
 
-    //     if (axios.isAxiosError(error)) {
-    //         throw error
-    //     }
-    // })
+            if (isServerError(error)) {
+                clientError.status = error.response?.status
+                clientError.message = error.response?.data.msg
+            } else if (axios.isAxiosError(error)) {
+                clientError.status = error.response?.status
+                clientError.message = error.message
+            }
+
+            throw clientError
+        })
 
     // @ts-ignore - it does exist
     promise.cancel = () => {

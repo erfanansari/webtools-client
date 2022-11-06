@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
+import type { ClientError } from '../apiClient'
 import { apiClient } from '../apiClient'
 import {
     IoBookmark,
@@ -11,8 +12,6 @@ import Layout from '../components/Layout'
 import { formatDate } from '../utils/helpers/formateDate'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import { handleError } from '../utils/helpers/handleError'
-import { toast } from 'react-toastify'
 
 const limit = 3
 interface Props {
@@ -30,14 +29,7 @@ const Home: NextPage<Props> = (props) => {
 
     const [fade, setFade] = useState(false)
 
-    const [error, setError] = useState<string | null>(null)
-
-    const onError = handleError((msg) => {
-        toast.error(msg)
-        setError(msg)
-    })
-
-    const toolsQuery = useInfiniteQuery<ToolsData>(
+    const toolsQuery = useInfiniteQuery<ToolsData, ClientError>(
         ['tools', ...(noTag ? [] : [tag]), ...(noQuery ? [] : [query])],
         ({ pageParam = 1, signal }) =>
             apiClient({
@@ -57,7 +49,6 @@ const Home: NextPage<Props> = (props) => {
                 pageParams: [1],
             },
             refetchOnWindowFocus: false,
-            onError,
         },
     )
 
@@ -76,7 +67,7 @@ const Home: NextPage<Props> = (props) => {
             <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
                 {toolsQuery.isError ? (
                     <h1 className="font-bold capitalize text-red-500">
-                        {error}
+                        {toolsQuery.error.message}
                     </h1>
                 ) : (
                     <h1 className="font-bold capitalize text-secondary-main">
@@ -224,7 +215,11 @@ export async function getStaticProps() {
                 limit,
             },
         }),
-    ])
+    ]).catch((err) => {
+        console.error('server side', err)
+
+        return [[], { tools: [], info: {} }]
+    })
 
     return {
         props: {

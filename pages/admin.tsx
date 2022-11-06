@@ -2,17 +2,15 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import slugify from 'slugify'
+import type { ClientError } from '../apiClient'
 import { apiClient } from '../apiClient'
 import Layout from '../components/Layout'
-import { handleError } from '../utils/helpers/handleError'
 
 function Admin() {
     const [name, setName] = useState('')
     const [tag, setTag] = useState('')
     const [description, setDescription] = useState('')
     const [url, setUrl] = useState('')
-
-    const onError = handleError(toast.error)
 
     const { data: tags } = useQuery(
         ['tags'],
@@ -27,7 +25,7 @@ function Admin() {
         },
     )
 
-    const toolQuery = useQuery(
+    const toolQuery = useQuery<Tool, ClientError>(
         ['tool'],
         () =>
             apiClient<Tool>({
@@ -46,7 +44,6 @@ function Admin() {
 
                 toast.success('Tool found!')
             },
-            onError,
             enabled: false,
         },
     )
@@ -71,7 +68,6 @@ function Admin() {
             onSuccess: () => {
                 toast.success('Tool created!')
             },
-            onError,
         },
     )
 
@@ -91,7 +87,6 @@ function Admin() {
             onSuccess: () => {
                 toast.success('Tool updated!')
             },
-            onError,
         },
     )
 
@@ -109,7 +104,6 @@ function Admin() {
                 setUrl('')
                 toast.success('Tool deleted!')
             },
-            onError,
         },
     )
 
