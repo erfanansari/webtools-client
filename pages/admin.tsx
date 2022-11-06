@@ -22,6 +22,7 @@ function Admin() {
             onSuccess: (d) => {
                 setTag(d[0])
             },
+            refetchOnWindowFocus: false,
         },
     )
 
