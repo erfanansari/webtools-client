@@ -25,13 +25,13 @@ export function isServerError(err: unknown): err is ServerError {
         typeof err === 'object' &&
         err !== null &&
         'response' in err &&
-        typeof err.response === 'object' &&
-        err.response !== null &&
-        'data' in err.response &&
-        typeof err.response.data === 'object' &&
-        err.response.data !== null &&
-        'msg' in err.response.data &&
-        typeof err.response.data.msg === 'string'
+        typeof (err as ServerError).response === 'object' &&
+        (err as ServerError).response !== null &&
+        'data' in (err as ServerError).response &&
+        typeof (err as ServerError).response.data === 'object' &&
+        (err as ServerError).response.data !== null &&
+        'msg' in (err as ServerError).response.data &&
+        typeof (err as ServerError).response.data.msg === 'string'
     )
 }
 
@@ -45,9 +45,10 @@ export function isClientError(err: unknown): err is ClientError {
         typeof err === 'object' &&
         err !== null &&
         'status' in err &&
-        (typeof err.status === 'number' || typeof err.status === 'undefined') &&
+        (typeof (err as ClientError).status === 'number' ||
+            typeof (err as ClientError).status === 'undefined') &&
         'message' in err &&
-        typeof err.message === 'string'
+        typeof (err as ClientError).message === 'string'
     )
 }
 
