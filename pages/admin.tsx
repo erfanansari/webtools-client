@@ -20,7 +20,7 @@ function Admin() {
             }),
         {
             onSuccess: (d) => {
-                setTag(d[0])
+                if (d[0]) setTag(d[0])
             },
             refetchOnWindowFocus: false,
         },
