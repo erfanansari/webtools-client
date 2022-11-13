@@ -45,7 +45,7 @@ const Header: React.FC<Props> = ({ query, setQuery }) => {
         placeholder: 'Search Tools...',
         type: 'search',
         className:
-            'rounded-full border outline-none ml-2 md:ml-8 text-secondary-dark px-4',
+            'rounded-full border ml-2 md:ml-8 text-secondary-dark px-4 outline-primary-main',
     }
 
     const path = `${baseURL.replace('/api', '')}/oauth/authorize`
