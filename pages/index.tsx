@@ -64,7 +64,7 @@ const Home: NextPage<Props> = (props) => {
 
     return (
         <Layout title="Web Tools" query={query} setQuery={setQuery}>
-            <div className="text-[2.5rem] sm:text-6xl mt-12 sm:mt-28 mb-6 sm:mb-16">
+            <div className="mt-12 mb-6 text-[2.5rem] sm:mt-28 sm:mb-16 sm:text-6xl">
                 {toolsQuery.isError ? (
                     <h1 className="font-bold capitalize text-red-500">
                         {toolsQuery.error.message}
@@ -89,11 +89,11 @@ const Home: NextPage<Props> = (props) => {
             </div>
             {toolsQuery.isError ? null : (
                 <>
-                    <div className="flex h-12 max-w-full overflow-x-scroll tags">
+                    <div className="tags flex h-12 max-w-full overflow-x-scroll">
                         {['All', ...props.data.tags].map((t) => (
                             <button
                                 key={t}
-                                className={`transition-all text-[17px] mx-3 min-w-fit text-neutral-dark hover:border-b-primary-main hover:border-b-2 ${
+                                className={`mx-3 min-w-fit text-[17px] text-neutral-dark transition-all hover:border-b-2 hover:border-b-primary-main ${
                                     t === tag ? selectedButtonClasses : ''
                                 }`}
                                 onClick={() => {
@@ -106,14 +106,14 @@ const Home: NextPage<Props> = (props) => {
                             </button>
                         ))}
                     </div>
-                    <div className="grid row-span-5 gap-8 pb-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-14">
+                    <div className="row-span-5 mt-8 grid gap-8 pb-8 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
                         {toolsQuery.data?.pages.map((page) => (
                             <Fragment key={page.info.next}>
                                 {page.tools.map((tool, i) => (
                                     <div
                                         key={tool.slug}
                                         className={[
-                                            'w-full overflow-hidden bg-white rounded-2xl md:w-full shadow-cart',
+                                            'w-full overflow-hidden rounded-2xl bg-white shadow-cart md:w-full',
                                             fade && page.info.prev
                                                 ? 'animate-fade'
                                                 : '',
@@ -166,14 +166,14 @@ const Home: NextPage<Props> = (props) => {
                                                     {tool.name}
                                                 </Link>
                                             </h2>
-                                            <p className="min-h-[70px] max-h-[70px] text-secondary-main text-ellipsis overflow-hidden whitespace-pre-wrap mb-4">
+                                            <p className="mb-4 max-h-[70px] min-h-[70px] overflow-hidden text-ellipsis whitespace-pre-wrap text-secondary-main">
                                                 {tool.description}
                                             </p>
                                             <a
                                                 href={tool.url}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="flex items-center mb-6 max-w-fit btn-primary"
+                                                className="btn-primary mb-6 flex max-w-fit items-center"
                                             >
                                                 Learn more
                                                 <IoChevronForward
@@ -193,7 +193,7 @@ const Home: NextPage<Props> = (props) => {
                                 toolsQuery.fetchNextPage()
                                 setFade(true)
                             }}
-                            className="mb-8 flex mx-auto btn-secondary mt-8"
+                            className="btn-secondary mx-auto mb-8 mt-8 flex"
                         >
                             {toolsQuery.isFetching ? 'Fetching' : 'More'}
                         </button>

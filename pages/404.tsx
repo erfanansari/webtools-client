@@ -6,7 +6,7 @@ const FourOFour: NextPage = () => {
     return (
         <Layout title="This page does not exist">
             <h1
-                className="font-bold text-3xl max-w-[80%] mx-auto md:text-[2.5rem] mt-20 md:mt-28 text-center capitalize text-neutral-dark"
+                className="mx-auto mt-20 max-w-[80%] text-center text-3xl font-bold capitalize text-neutral-dark md:mt-28 md:text-[2.5rem]"
                 style={{
                     lineHeight: '1.5',
                 }}
@@ -16,7 +16,7 @@ const FourOFour: NextPage = () => {
                 Click here to go back to the homepage
             </h1>
             <Link href="/">
-                <button className="btn-secondary mt-10 mx-auto block">
+                <button className="btn-secondary mx-auto mt-10 block">
                     Go Back
                 </button>
             </Link>

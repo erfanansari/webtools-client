@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
+import type { NextPage } from 'next'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import slugify from 'slugify'
@@ -6,7 +7,7 @@ import type { ClientError } from '../apiClient'
 import { apiClient } from '../apiClient'
 import Layout from '../components/Layout'
 
-function Admin() {
+const Admin: NextPage = () => {
     const [name, setName] = useState('')
     const [tag, setTag] = useState('')
     const [description, setDescription] = useState('')
